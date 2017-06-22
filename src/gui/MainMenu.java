@@ -80,18 +80,21 @@ public class MainMenu extends JFrame {
 
 		int[] a = new int[arraySize];
 		Sorter.fillRandom(a, maxInt);
-		UserInterface ui;
+		
+		Sorter s;
 		if(sortChoice==0){
-			ui= new UserInterface(new InsertionSort(a,maxInt+5));
+			s = new InsertionSort(a,maxInt+5);
 		}
 		else if(sortChoice==1){
-			ui= new UserInterface(new BubbleSort(a,maxInt+5));
+			s=new BubbleSort(a,maxInt+5);
 		}
 		else{
-			ui= new UserInterface(new CountingSort(a,maxInt+5));
+			s =new CountingSort(a,maxInt+5);
 		}
 		this.setVisible(false);
-		ui.drawState();
+		s.update();
+		s.sort();
+		//ui.drawState();
 
 	}
 		

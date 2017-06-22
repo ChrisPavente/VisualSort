@@ -5,19 +5,28 @@ package sorts;
  * element is put at the end after first full pass.
  */
 public class BubbleSort extends Sorter {
-	int swaps;
+	boolean swap;
 	public BubbleSort(int[] a, int m) {
 		super(a, m);
 		setIndexA(0);
 		setIndexB(1);
-		swaps=0;
+		swap=false;
 	}
 
-	@Override
+	public void sort(){
+		while(!sorted){
+			if(gui.bNum() !=3){
+				step();
+				update();
+			}
+		}
+		gui.complete();
+	}
+	
 	public void step() {
 		if(getIndexB() < array.length){
 			if(array[getIndexB()]<array[getIndexA()]){
-				swaps++;
+				swap=true;;
 				swap(getIndexB(),getIndexA());
 			}
 			setIndexA(getIndexA() + 1);
@@ -26,10 +35,10 @@ public class BubbleSort extends Sorter {
 		if(getIndexB()==array.length){
 			setIndexB(1);
 			setIndexA(0);
-			if(swaps==0){
+			if(!swap){
 				sorted=true;
 			}
-			swaps=0;
+			swap=false;
 		}
 	}
 	

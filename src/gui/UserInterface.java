@@ -23,11 +23,21 @@ public class UserInterface extends JFrame {
 	//Run=1, Step=2, Stop=3
 	private long timeStep=200;
 	private boolean finish=false;
+	private JPanel sortSpace;
+	private Graphics drawSpace;
 	
 	public UserInterface(Sorter s){
 		super();
 		sort=s;
 		setup();
+	}
+	
+	public int bNum(){
+		return bNum;
+	}
+	
+	public long timeStep(){
+		return timeStep;
 	}
 	
 	//Setup the window
@@ -98,48 +108,34 @@ public class UserInterface extends JFrame {
 	
 	
 	/*
-	 * Draws the sorting algorithm as it takes place.
-	 * After completion a dialog prompts the user to restart
+	 * Setup the drawSpace for the sort.
 	 */
-	public void drawState(){
+	public void drawInitalState(){
 		int height=500;
 		int width=600;
-		JPanel j = new JPanel();
-		this.add(j);
-		j.setBounds(0, 0, width+40, height);
-		j.setVisible(true);
-		Graphics g= j.getGraphics();
-		do{//Since bNum is defaulted to 3, always draws initial state on the first loop
-			if(bNum<3){
-				sort.step();
-			}
-			if(bNum==2){
-				bNum++;//after the single step was taken, stops further steps
-			}
-			g.setColor(Color.LIGHT_GRAY);
-			g.fillRect(0, 0, width+40, height);
-			for(int i=0;i<sort.Length();i++){
-				g.setColor(Color.BLACK);
-				g.fillRect(5+ (int) (i*width/(sort.Length()*1.05)), (height/sort.getMax())*(sort.getMax()-sort.getAtIndex(i)), (int) (width/(sort.Length()*1.10)), height);
-			}
-			if(sort.getIndexA()!=-1 && sort.getIndexA()<sort.Length()){
-				//draw red box for A
-				g.setColor(Color.RED);
-				g.fillRect(5+ (int) (sort.getIndexA()*width/(sort.Length()*1.05)), (height/sort.getMax())*(sort.getMax()-sort.getAtIndex(sort.getIndexA())), (int) (width/(sort.Length()*1.10)), height);
-			}
-			if(sort.getIndexB()!=-1){
-				//draw blue box for B
-				g.setColor(Color.BLUE);
-				g.fillRect(5 + (int) (sort.getIndexB()*width/(sort.Length()*1.05)), (height/sort.getMax())*(sort.getMax()-sort.getAtIndex(sort.getIndexB())), (int) (width/(sort.Length()*1.10)), height);
-			}
-			
-			try {
-				Thread.sleep(timeStep);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}while(!sort.isSorted());
+		sortSpace = new JPanel();
+		this.add(sortSpace);
+		sortSpace.setBounds(0, 0, width+40, height);
+		sortSpace.setVisible(true);
+		drawSpace= sortSpace.getGraphics();
+		drawSpace.setColor(Color.LIGHT_GRAY);
+		drawSpace.fillRect(0, 0, width+40, height);
+		
+		drawSpace.setColor(Color.BLACK);
+		for(int i=0;i<sort.Length();i++){
+			drawSpace.fillRect(5+ (int) (i*width/(sort.Length()*1.05)), (height/sort.getMax())*(sort.getMax()-sort.getAtIndex(i)), (int) (width/(sort.Length()*1.10)), height);
+		}
+		
+		try {
+			Thread.sleep(timeStep);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//called upon completion of sort, brings up dialog box and option to start a new sort.
+	public void complete(){
 		JDialog dialog = new JDialog(this, "Sort Complete!");
 		dialog.setBounds(0, 0, 100, 100);
 		JButton b = new JButton();
@@ -152,16 +148,50 @@ public class UserInterface extends JFrame {
 		});
 		dialog.add(b);
 		dialog.setVisible(true);
-		
-		
+
+
 		while(!finish){
 			try {
-				Thread.sleep(50);
+				Thread.sleep(100);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
 		}
 		this.setVisible(false);
-		new MainMenu();;
+		new MainMenu();
 	}
+	
+	public void update(){
+		int height=500;
+		int width=600;
+		drawSpace.setColor(Color.LIGHT_GRAY);
+		drawSpace.fillRect(0, 0, width+40, height);
+		drawSpace.setColor(Color.BLACK);
+		for(int i=0;i<sort.Length();i++){
+			drawSpace.fillRect(5+ (int) (i*width/(sort.Length()*1.05)), (height/sort.getMax())*(sort.getMax()-sort.getAtIndex(i)), (int) (width/(sort.Length()*1.10)), height);
+		}
+		if(sort.getIndexA()!=-1 && sort.getIndexA()<sort.Length()){
+			//draw red box for A
+			drawSpace.setColor(Color.RED);
+			drawSpace.fillRect(5+ (int) (sort.getIndexA()*width/(sort.Length()*1.05)), (height/sort.getMax())*(sort.getMax()-sort.getAtIndex(sort.getIndexA())), (int) (width/(sort.Length()*1.10)), height);
+		}
+		if(sort.getIndexB()!=-1){
+			//draw blue box for B
+			drawSpace.setColor(Color.BLUE);
+			drawSpace.fillRect(5 + (int) (sort.getIndexB()*width/(sort.Length()*1.05)), (height/sort.getMax())*(sort.getMax()-sort.getAtIndex(sort.getIndexB())), (int) (width/(sort.Length()*1.10)), height);
+		}
+		try {
+			Thread.sleep(timeStep);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(bNum==2){
+			bNum++;
+		}
+
+	}
+	
+	
+	
 }

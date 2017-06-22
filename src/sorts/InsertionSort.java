@@ -13,7 +13,16 @@ public class InsertionSort extends Sorter {
 		indexOfSmallest=0;
 	}
 
-	@Override
+	public void sort(){
+		while(!sorted){
+			if(gui.bNum() !=3){
+				step();
+				update();
+			}
+		}
+		gui.complete();
+	}
+	
 	public void step() {
 		if(array[getIndexB()]<=array[indexOfSmallest]){
 			indexOfSmallest=getIndexB();

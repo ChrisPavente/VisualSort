@@ -1,4 +1,7 @@
 package sorts;
+
+import gui.UserInterface;
+
 /**
  * 
  */
@@ -13,6 +16,7 @@ public abstract class Sorter {
 	private int indexB;
 	protected boolean sorted;
 	private int max; //Used for graphics, and counting sort uses this to cheat
+	protected UserInterface gui;
 	
 	public Sorter(int[] a,int m){
 		array=a;
@@ -20,6 +24,9 @@ public abstract class Sorter {
 		setIndexB(-1);
 		sorted=false;
 		max=m;
+		gui = new UserInterface(this);
+		gui.drawInitalState();
+		
 	}
 	
 	public int getAtIndex(int i){
@@ -47,9 +54,9 @@ public abstract class Sorter {
 		this.indexB = indexB;
 	}
 	
-	//Should make the underlying sorter take one step in the sort algorithm
+	//Should make the underlying sorter start the sort algorithm
 	//to be implemented by subclass.
-	public abstract void step();
+	public abstract void sort();
 	//
 	/*
 	 * @Return returns the index of the first integer in a comparison, returns -1 if using 
@@ -65,7 +72,6 @@ public abstract class Sorter {
 	public int indexOfB(){
 		return getIndexB();
 	}
-	
 	
 	
 	/*
@@ -84,7 +90,10 @@ public abstract class Sorter {
 		array[j]=hold;
 	}
 	
-	
+	//Calls for an update to the gui, after a step in the sort algorithm is taken.
+	public void update(){
+		gui.update();
+	}
 		
 
 	//Fills the given array with random integers between 1-max

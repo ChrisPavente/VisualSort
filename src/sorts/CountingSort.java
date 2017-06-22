@@ -16,8 +16,17 @@ public class CountingSort extends Sorter {
 		Arrays.fill(cheat,0);
 		setIndexA(0);
 	}
-
-	@Override
+	
+	public void sort(){
+		while(!sorted){
+			if(gui.bNum() !=3){
+				step();
+				update();
+			}
+		}
+		gui.complete();
+	}
+	
 	public void step() {
 		if(getIndexA()<array.length){
 			cheat[array[getIndexA()]]++;
