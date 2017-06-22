@@ -1,0 +1,6 @@
+
+bin/gui/UserInterface$2.class
+*.class
+.project
+.settings/org.eclipse.jdt.core.prefs
+.classpath
