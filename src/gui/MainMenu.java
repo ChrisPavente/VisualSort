@@ -86,7 +86,7 @@ public class MainMenu extends JFrame {
 			s=new BubbleSort(a,maxInt+5);
 		}
 		else if(sortChoice ==2){
-			s =new QuickSort(a,maxInt+5);
+			s =new CountingSort(a,maxInt+5);
 		}
 		else{
 			s =new ShellSort(a,maxInt+5);
