@@ -4,9 +4,9 @@ package sorts;
  * Insertion Sort: Assumes everything before indexA has been sorted, then finds the smallest
  * number remaining in the array and swaps it with the value at indexA 
  */
-public class InsertionSort extends Sorter {
+public class SelectionSort extends Sorter {
 	int indexOfSmallest;
-	public InsertionSort(int[] a,int m) {
+	public SelectionSort(int[] a,int m) {
 		super(a,m);
 		setIndexA(0);
 		setIndexB(0);
@@ -47,7 +47,7 @@ public class InsertionSort extends Sorter {
 	}
 	
 	public String toString(){
-		return "InsertionSort";
+		return "SelectionSort";
 	}
 
 }

@@ -80,7 +80,7 @@ public class MainMenu extends JFrame {
 		
 		Sorter s;
 		if(sortChoice==0){
-			s = new InsertionSort(a,maxInt+5);
+			s = new SelectionSort(a,maxInt+5);
 		}
 		else if(sortChoice==1){
 			s=new BubbleSort(a,maxInt+5);
