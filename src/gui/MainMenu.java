@@ -27,7 +27,7 @@ public class MainMenu extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		size = new JButton[3];
 		max = new JButton[3];
-		sort = new JButton[3];
+		sort = new JButton[6];
 		Setup();
 	}
 	
@@ -55,9 +55,12 @@ public class MainMenu extends JFrame {
 		t.setBounds(103, 110, 100, 30);
 		this.add(t);
 		
-		sort[0] = makeSortButton(0,"Insertion");
+		sort[0] = makeSortButton(0,"Selection");
 		sort[1] = makeSortButton(1,"Bubble");
 		sort[2] = makeSortButton(2,"Counting");
+		sort[3] = makeSortButton(3,"Merge");
+		sort[4] = makeSortButton(4,"Quick");
+		sort[5] = makeSortButton(5,"Shell");
 		for(JButton j:sort){
 			j.setEnabled(false);
 			this.add(j);
@@ -87,6 +90,12 @@ public class MainMenu extends JFrame {
 		}
 		else if(sortChoice ==2){
 			s =new CountingSort(a,maxInt+5);
+		}
+		else if(sortChoice ==3){
+			s = new MergeSort(a, maxInt+5);
+		}
+		else if(sortChoice ==4){
+			s = new QuickSort(a, maxInt+5);
 		}
 		else{
 			s =new ShellSort(a,maxInt+5);
@@ -123,7 +132,7 @@ public class MainMenu extends JFrame {
 	private JButton makeSortButton(int i, String s){
 		JButton b = new JButton();
 		b.setText(s);
-		b.setBounds(40*(i)*3+100, 240, 100, 30);
+		b.setBounds(40*(i%3)*3+100, (int)(i/3)*50+240, 100, 30);
 		b.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for(JButton j: sort){
